@@ -1,13 +1,11 @@
-import { Token, Event, Address } from "../types";
+import { Token, Event, Address, TokenTransfer } from "../types";
 import assert from "assert";
 import {
   EventTokenLog,
   MintTokenTransaction,
   TransferLog,
 } from "../types/abi-interfaces/PoapAbi";
-import { BigNumber, BigNumberish } from "ethers";
-import { EthereumLog } from "@subql/types-ethereum";
-import { TokenTransfer } from "../types/models/TokenTransfer";
+import { BigNumberish } from "ethers";
 
 async function checkGetEvent(id: BigNumberish): Promise<Event> {
   let event = await Event.get(id.toString().toLowerCase());
@@ -44,14 +42,14 @@ export async function handleTokenMint(tx: MintTokenTransaction): Promise<void> {
 
   // The tokenID is from the logs from this transaction
   // This searches by the function fragment signature to get the right log
-  const log = tx.logs?.find((log) =>
+  const eventTokenLog = tx.logs?.find((log) =>
     log.topics.includes(
       "0x4b3711cd7ece062b0828c1b6e08d814a72d4c003383a016c833cbb1b45956e34"
     )
   ) as EventTokenLog;
 
-  if (log) {
-    const tokenId = log.args?.tokenId;
+  if (eventTokenLog) {
+    const tokenId = eventTokenLog.args?.tokenId;
     assert(tokenId, "No tokenID");
 
     const newToken = Token.create({
@@ -76,9 +74,17 @@ export async function handleTokenTransfer(log: TransferLog) {
   if (log.args.from != "0x0000000000000000000000000000000000000000") {
     const from = await checkGetAddress(await log.args.from);
     const to = await checkGetAddress(await log.args.to);
-    const token = await Token.get(await log.args.tokenId.toString());
+    let token = await Token.get(await log.args.tokenId.toString());
 
-    assert(token, `No Token ${token}, this must be new to us`);
+    if (!token) {
+      token = Token.create({
+        id: log.args.tokenId.toString(),
+        mintBlockHeight: BigInt(log.blockNumber),
+        mintDate: new Date(Number(log.block.timestamp) * 1000), // Saved as a seconds epoch
+        mintReceiverId: to.id,
+        currentHolderId: to.id,
+      });
+    }
 
     const newTokenTransfer = TokenTransfer.create({
       id: log.transactionHash,
