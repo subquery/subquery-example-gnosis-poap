@@ -113,3 +113,110 @@ query {
   }
 }
 ```
+
+You might get data back that looks like this
+
+```json
+{
+  "data": {
+    "tokens": {
+      "nodes": [
+        {
+          "id": "16947",
+          "mintBlockHeight": "12293177",
+          "mintReceiverId": "0xbcb0d39073ad99aa68fb6d7b2c2a433892af6fb3",
+          "mintDate": "2020-10-01T17:04:40",
+          "eventId": "361"
+        },
+        {
+          "id": "16946",
+          "mintBlockHeight": "12292651",
+          "mintReceiverId": "0x05b512f909daae5575afb47b3eeb0b0afeb14c00",
+          "mintDate": "2020-10-01T16:20:30",
+          "eventId": "69"
+        },
+        {
+          "id": "16945",
+          "mintBlockHeight": "12291133",
+          "mintReceiverId": "0x0542e8f95f765b81cd6a08db37d914f664db5d3e",
+          "mintDate": "2020-10-01T14:13:20",
+          "eventId": "405"
+        },
+        {
+          "id": "16944",
+          "mintBlockHeight": "12290462",
+          "mintReceiverId": "0xa615f34b170329507b37c142f8f812b8e1393beb",
+          "mintDate": "2020-10-01T13:16:35",
+          "eventId": "405"
+        },
+        {
+          "id": "16943",
+          "mintBlockHeight": "12290460",
+          "mintReceiverId": "0xe07e487d5a5e1098bbb4d259dac5ef83ae273f4e",
+          "mintDate": "2020-10-01T13:16:25",
+          "eventId": "405"
+        }
+      ]
+    },
+    "addresses": {
+      "nodes": [
+        {
+          "id": "0xb8d7b045d299c9c356bc5ee4fe2dddc8a31280a5",
+          "tokensByCurrentHolderId": {
+            "totalCount": 1,
+            "nodes": [
+              {
+                "id": "16924"
+              }
+            ]
+          }
+        },
+        {
+          "id": "0xba993c1fee51a4a937bb6a8b7b74cd8dffdca1a4",
+          "tokensByCurrentHolderId": {
+            "totalCount": 1,
+            "nodes": [
+              {
+                "id": "16912"
+              }
+            ]
+          }
+        },
+        {
+          "id": "0x2b098ce1d5a4f9c2729268a4a3f04b387d4cc7ec",
+          "tokensByCurrentHolderId": {
+            "totalCount": 1,
+            "nodes": [
+              {
+                "id": "16921"
+              }
+            ]
+          }
+        },
+        {
+          "id": "0x60df279f7cc51d2f0ff903f68c3a8dfcf65419f7",
+          "tokensByCurrentHolderId": {
+            "totalCount": 1,
+            "nodes": [
+              {
+                "id": "16916"
+              }
+            ]
+          }
+        },
+        {
+          "id": "0x626ea6d1e5ea3fbaba22f5d4005d98e7039d0c99",
+          "tokensByCurrentHolderId": {
+            "totalCount": 1,
+            "nodes": [
+              {
+                "id": "16919"
+              }
+            ]
+          }
+        }
+      ]
+    }
+  }
+}
+```
